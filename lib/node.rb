@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
 class Node
+  include Comparable
+
   attr_reader :data
   attr_accessor :left, :right
+
+  def <=> (other_node)
+    data <=> other_node.data
+  end
 
   def initialize(data, left=nil, right=nil)
     @data = data
@@ -11,6 +17,6 @@ class Node
   end
 
   def to_s
-    @data
+    @data.to_s
   end
 end
