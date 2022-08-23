@@ -99,45 +99,47 @@ class Tree
     until queue.empty? do
       current = queue.shift
       result.push current.data
+      yield current if block_given?
 
       queue.push current.left unless current.left.nil?
       queue.push current.right unless current.right.nil?
     end
 
-    return result
+    return result unless block_given?
   end
 
-  def preorder(node=@root)
+  def preorder(node=@root, &block)
     return if node.nil?
 
     if block_given?
-      yield node.data
-      yield preorder(node.left)
-      yield preorder(node.right)
+      yield node
+      yield preorder(node.left, &block)
+      yield preorder(node.right, &block)
     else
       [node.data] + preorder(node.left).to_a + preorder(node.right).to_a
     end
   end
 
-  def inorder(node=@root)
+  def inorder(node=@root, &block)
     return if node.nil?
 
     if block_given?
-      yield inorder(node.left)
-      yield node.data
-      yield inorder(node.right)
+      inorder(node.left, &block)
+      yield node unless node.nil?
+      inorder(node.right, &block)
     else
       # Convert to array for nil children
       inorder(node.left).to_a + [node.data] + inorder(node.right).to_a
     end
   end
 
-  def postorder(node=@root)
+  def postorder(node=@root, &block)
     return if node.nil?
+
     if block_given?
-      yield postorder(node.left)
-      yield postorder(node.right)
-      yield node.data
+      postorder(node.left, &block)
+      postorder(node.right, &block)
+      yield node
     else
       postorder(node.left).to_a + postorder(node.right).to_a + [node.data]
     end
