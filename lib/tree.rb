@@ -24,6 +24,20 @@ class Tree
     return root
   end
 
+  def insert(root=@root, data)
+    return Node.new(data) if root.nil?
+
+    if root.data == data
+      return root
+    elsif root.data < data
+      root.right = insert(root.right, data)
+    else
+      root.left = insert(root.left, data)
+    end
+
+    return root
+  end
+
   def inorder(node=@root)
     return if node.nil?
 
