@@ -107,12 +107,30 @@ class Tree
     return result
   end
 
+  def preorder(node=@root)
+    return [] if node.nil?
+
+    [node.data] + preorder(node.left) + preorder(node.right)
+  end
+
+  def inorder(node=@root)
+    return [] if node.nil?
+
+    inorder(node.left) + [node.data] + inorder(node.right)
+  end
+
+  def postorder(node=@root)
+    return [] if node.nil?
+
+    postorder(node.left) + postorder(node.right) + [node.data]
+  end
+
   def print_inorder(node=@root)
     return if node.nil?
 
-    preorder(node.left)
+    print_inorder(node.left)
     puts node.data
-    preorder(node.right)
+    print_inorder(node.right)
   end
 
   def print_preorder(node=@root)
