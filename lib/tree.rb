@@ -108,21 +108,39 @@ class Tree
   end
 
   def preorder(node=@root)
-    return [] if node.nil?
+    return if node.nil?
 
-    [node.data] + preorder(node.left) + preorder(node.right)
+    if block_given?
+      yield node.data
+      yield preorder(node.left)
+      yield preorder(node.right)
+    else
+      [node.data] + preorder(node.left).to_a + preorder(node.right).to_a
+    end
   end
 
   def inorder(node=@root)
-    return [] if node.nil?
+    return if node.nil?
 
-    inorder(node.left) + [node.data] + inorder(node.right)
+    if block_given?
+      yield inorder(node.left)
+      yield node.data
+      yield inorder(node.right)
+    else
+      # Convert to array for nil children
+      inorder(node.left).to_a + [node.data] + inorder(node.right).to_a
+    end
   end
 
   def postorder(node=@root)
-    return [] if node.nil?
-
-    postorder(node.left) + postorder(node.right) + [node.data]
+    return if node.nil?
+    if block_given?
+      yield postorder(node.left)
+      yield postorder(node.right)
+      yield node.data
+    else
+      postorder(node.left).to_a + postorder(node.right).to_a + [node.data]
+    end
   end
 
   def print_inorder(node=@root)
