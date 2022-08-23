@@ -24,6 +24,14 @@ class Tree
     return root
   end
 
+  def find(root=@root, key)
+    return root if root.nil? or root.data == key
+
+    return find(root.right, key) if root.data < key
+
+    return search(root.left, key)
+  end
+
   def insert(root=@root, data)
     return Node.new(data) if root.nil?
 
