@@ -113,8 +113,8 @@ class Tree
 
     if block_given?
       yield node
-      yield preorder(node.left, &block)
-      yield preorder(node.right, &block)
+      preorder(node.left, &block)
+      preorder(node.right, &block)
     else
       [node.data] + preorder(node.left).to_a + preorder(node.right).to_a
     end
