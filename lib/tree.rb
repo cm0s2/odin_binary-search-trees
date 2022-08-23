@@ -88,6 +88,25 @@ class Tree
     return root
   end
 
+  def level_order(root=@root)
+    return if root.nil?
+
+    result = []
+
+    queue = []
+    queue.push(root)
+
+    until queue.empty? do
+      current = queue.shift
+      result.push current.data
+
+      queue.push current.left unless current.left.nil?
+      queue.push current.right unless current.right.nil?
+    end
+
+    return result
+  end
+
   def print_inorder(node=@root)
     return if node.nil?
 
