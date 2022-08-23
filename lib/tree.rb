@@ -142,28 +142,4 @@ class Tree
       postorder(node.left).to_a + postorder(node.right).to_a + [node.data]
     end
   end
-
-  def print_inorder(node=@root)
-    return if node.nil?
-
-    print_inorder(node.left)
-    puts node.data
-    print_inorder(node.right)
-  end
-
-  def print_preorder(node=@root)
-    return if node.nil?
-
-    puts node.data
-    print_preorder(node.left)
-    print_preorder(node.right)
-  end
-
-  def print_postorder(node=@root)
-    return if node.nil?
-    
-    preorder(node.left)
-    preorder(node.right)
-    puts node.data
-  end
 end
