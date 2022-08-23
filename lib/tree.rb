@@ -38,7 +38,49 @@ class Tree
     return root
   end
 
-  def inorder(node=@root)
+  # Find lowest value in the tree
+  def min_value_node(node)
+    current = node
+    until current.left.nil? do
+      current = current.left
+    end
+
+    return current
+  end
+
+  def delete(root=@root, key)
+    return root if root.nil?
+
+    if key < root.data
+      root.left = delete(root.left, key)
+    elsif key > root.data
+      root.right = delete(root.right, key)
+    else
+      if root.left.nil?
+        temp = root.right
+        root = nil
+        return temp
+      elsif root.right.nil?
+        temp = root.right
+        root = nil
+        return temp
+      end
+
+      # Node with two children:
+      # Get the inorder successor (smallest in the right subtree)
+      temp = min_value_node(root.right)
+
+      # Copy the inorder successor's content to this node
+      root = Node.new(temp.data, temp.left, temp.right)
+
+      # Delete the inorder successor
+      root.right = delete(root.right, temp.data)
+    end
+
+    return root
+  end
+
+  def print_inorder(node=@root)
     return if node.nil?
 
     preorder(node.left)
@@ -46,15 +88,15 @@ class Tree
     preorder(node.right)
   end
 
-  def preorder(node=@root)
+  def print_preorder(node=@root)
     return if node.nil?
 
     puts node.data
-    preorder(node.left)
-    preorder(node.right)
+    print_preorder(node.left)
+    print_preorder(node.right)
   end
 
-  def postorder(node=@root)
+  def print_postorder(node=@root)
     return if node.nil?
     
     preorder(node.left)
