@@ -29,7 +29,7 @@ class Tree
 
     return find(root.right, key) if root.data < key
 
-    return search(root.left, key)
+    return find(root.left, key)
   end
 
   def insert(root=@root, data)
@@ -98,6 +98,25 @@ class Tree
     answer = [left_height, right_height].max + 1
 
     return answer
+  end
+
+  def depth(node, root=@root)
+    return -1 if root.nil?
+
+    distance = -1
+
+    # Check to see if we found the node
+    return distance + 1 if node == root
+
+    # Recursively search left subtree
+    distance = depth(node, root.left)
+    return distance + 1 if distance >= 0
+
+    # Recursively search right subtree
+    distance = depth(node, root.right)
+    return distance + 1 if distance >= 0
+
+    return distance
   end
 
   def level_order(root=@root)
