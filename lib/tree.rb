@@ -123,6 +123,10 @@ class Tree
     (height(@root.left) - height(@root.right)).abs <= 1
   end
 
+  def rebalance
+    @root = build_tree(inorder)
+  end
+
   def level_order(root=@root)
     return if root.nil?
 
