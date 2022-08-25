@@ -88,6 +88,18 @@ class Tree
     return root
   end
 
+  def height(node)
+    return -1 if node.nil?
+
+    left_height = height(node.left)
+    right_height = height(node.right)
+    # puts "Node #{node.data} has LH #{left_height} and RH #{right_height}"
+
+    answer = [left_height, right_height].max + 1
+
+    return answer
+  end
+
   def level_order(root=@root)
     return if root.nil?
 
