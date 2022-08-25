@@ -119,6 +119,10 @@ class Tree
     return distance
   end
 
+  def balanced?
+    (height(@root.left) - height(@root.right)).abs <= 1
+  end
+
   def level_order(root=@root)
     return if root.nil?
 
